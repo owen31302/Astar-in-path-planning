@@ -1,0 +1,7 @@
+c:\users\student\documents\visual studio 2015\Projects\Astar\Astar\bin\Debug\Astar.exe.config
+C:\Users\Student\Documents\GitHub\Astar-in-path-planning\Astar\Astar\bin\Debug\Astar.exe.config
+C:\Users\Student\Documents\GitHub\Astar-in-path-planning\Astar\Astar\bin\Debug\Astar.exe
+C:\Users\Student\Documents\GitHub\Astar-in-path-planning\Astar\Astar\bin\Debug\Astar.pdb
+C:\Users\Student\Documents\GitHub\Astar-in-path-planning\Astar\Astar\obj\Debug\Astar.csprojResolveAssemblyReference.cache
+C:\Users\Student\Documents\GitHub\Astar-in-path-planning\Astar\Astar\obj\Debug\Astar.exe
+C:\Users\Student\Documents\GitHub\Astar-in-path-planning\Astar\Astar\obj\Debug\Astar.pdb
