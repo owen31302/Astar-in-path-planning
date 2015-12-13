@@ -11,7 +11,7 @@ namespace Astar
         static void Main(string[] args)
         {
             xypoint startNode = new xypoint(1,2);
-            xypoint goalNode = new xypoint(7,3);
+            xypoint goalNode = new xypoint(3,5);
 
             String words = helperfunction.AstarSearch(startNode, goalNode);
 
