@@ -10,14 +10,9 @@ namespace Astar
     {
         static void Main(string[] args)
         {
-            
-            xypoint startNode = new xypoint();
-            startNode.x = 1;
-            startNode.y = 2;
+            xypoint startNode = new xypoint(1,2);
+            xypoint goalNode = new xypoint(7,3);
 
-            xypoint goalNode = new xypoint();
-            goalNode.x = 3;
-            goalNode.y = 5;
             String words = helperfunction.AstarSearch(startNode, goalNode);
 
             Console.WriteLine(words);
@@ -29,10 +24,11 @@ namespace Astar
 
         static public String AstarSearch(xypoint startNode, xypoint goalNode) {
 
-            String returnString = "fail";
+            String returnString = "No routes to reach the goal";
 
             //TODO need to be fixed
             node[,] map = buildMap(8, 8);
+            modifyMap(map);
 
             List<node> open = new List<node>();
             List<node> closed = new List<node>();
@@ -99,8 +95,19 @@ namespace Astar
             List<node> successorNodes = new List<node>();
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
-                    if (map[startNode.selfNodexy.x + i, startNode.selfNodexy.y + j].selfNodexy != startNode.parentNodexy &&
-                        map[startNode.selfNodexy.x + i, startNode.selfNodexy.y + j].selfNodexy != startNode.selfNodexy) {
+                    /*
+                    Here needs to check 5 things:
+                    1. successorNodes.x needs cannot be -1 or larger than map
+                    2. successorNodes.y needs cannot be -1 or larger than map
+                    3. successorNodes cannot be their parent nodes
+                    4. successorNodes cannot be the startNode
+                    5. if terrain =1, means that successorNodes cannot pass the terrain
+                    */
+                    if ((startNode.selfNodexy.x + i>=0 && startNode.selfNodexy.x + i <= map.GetLength(0)-1) &&
+                        (startNode.selfNodexy.y + j >= 0 && startNode.selfNodexy.y + j <= map.GetLength(1) - 1) &&
+                        map[startNode.selfNodexy.x + i, startNode.selfNodexy.y + j].selfNodexy != startNode.parentNodexy &&
+                        map[startNode.selfNodexy.x + i, startNode.selfNodexy.y + j].selfNodexy != startNode.selfNodexy &&
+                        map[startNode.selfNodexy.x + i, startNode.selfNodexy.y + j].terrain != 1) {
                         successorNodes.Add(map[startNode.selfNodexy.x + i, startNode.selfNodexy.y + j]);
                     }
                 }
@@ -141,6 +148,27 @@ namespace Astar
             return returnNode;
         }
 
+        static private void modifyMap(node[,] map) {
+            int[,] terrain = {
+                {2, 4},
+                {3, 3},
+                {3, 4},
+                {4, 3},
+                {4, 4},
+                {4, 5},
+                {5, 3},
+                {5, 4},
+                {5, 5},
+                {6, 2},
+                {6, 3},
+                {6, 4},
+                {6, 5}
+            };
+            for (int i = 0; i < terrain.GetLength(0); i++) {
+                map[terrain[i, 0], terrain[i, 1]].terrain = 1;
+            }
+        }
+
         static private node[,] buildMap(int row, int col)
         {
             node[,] map = new node[row, col];
@@ -168,6 +196,11 @@ namespace Astar
             this.x = 0;
             this.y = 0;
         }
+        public xypoint(int x , int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
     }
 
     public class node {
@@ -176,6 +209,7 @@ namespace Astar
         public float costToGoal;
         public float totalCost;
         public xypoint parentNodexy;
+        public int terrain;
 
         public node() {
             this.selfNodexy = new xypoint();
@@ -183,6 +217,7 @@ namespace Astar
             this.costToGoal = 0;
             this.totalCost = this.costFromStart + this.costToGoal;
             this.parentNodexy = new xypoint();
+            this.terrain = 0;
         }
     } 
 }
